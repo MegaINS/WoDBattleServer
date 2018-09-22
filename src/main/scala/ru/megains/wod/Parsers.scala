@@ -40,7 +40,7 @@ object Parsers {
 
 
 
-    val userAuth: RowParser[(Int, String, String)] = {
+    val playerAuth: RowParser[(Int, String, String)] = {
         get[Int]("id") ~
                 get[String]("email") ~
                 get[String]("password") map{
@@ -48,18 +48,26 @@ object Parsers {
         }
     }
 
-    val userInfo: RowParser[PlayerInfo] = {
+//    val playerInfo: RowParser[PlayerInfo] = {
+//        get[Int]("id") ~
+//        get[String]("nick") ~
+//        get[Int]("level") ~
+//        get[Int]("exp") ~
+//        get[Int]("location") ~
+//        get[Int]("money") ~
+//        get[Int]("battle") map{
+//            case id~nick~level~exp~loc~money~battle =>new PlayerInfo(id,nick,level,exp,loc,money,battle)
+//        }
+//    }
+    val playerInfo: RowParser[PlayerInfo] = {
         get[Int]("id") ~
-        get[String]("nick") ~
-        get[Int]("level") ~
-        get[Int]("exp") ~
-        get[Int]("location") ~
-        get[Int]("money") ~
-        get[Int]("battle") map{
-            case id~nick~level~exp~loc~money~battle =>new PlayerInfo(id,nick,level,exp,loc,money,battle)
+                get[Int]("level") ~
+                get[Int]("exp") ~
+                get[Int]("location") ~
+                get[Int]("money") map{
+            case id~level~exp~loc~money =>new PlayerInfo(id,level,exp,loc,money)
         }
     }
-
     val mob: RowParser[Mob] = {
         get[Int]("id") ~
         get[String]("name") ~

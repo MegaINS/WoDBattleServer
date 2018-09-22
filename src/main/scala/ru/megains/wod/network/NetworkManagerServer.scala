@@ -5,11 +5,11 @@ import java.util.concurrent.locks.ReentrantReadWriteLock
 
 import io.netty.channel._
 import ru.megains.wod.network.handler.{INetHandler, NetHandlerBattleServer}
-import ru.megains.wod.network.packet.{CHandshake, ConnectionState, Packet}
+import ru.megains.wod.network.packet.{CHandshake, ConnectionState, Packet, PacketRead}
 import ru.megains.wod.{BattleServer, Logger}
 
 
-class NetworkManagerServer(server:BattleServer) extends SimpleChannelInboundHandler[Packet[INetHandler]] with Logger[NetworkManagerServer] {
+class NetworkManagerServer(server:BattleServer) extends SimpleChannelInboundHandler[PacketRead[INetHandler]] with Logger[NetworkManagerServer] {
 
 
     var channel: Channel = _
@@ -27,6 +27,7 @@ class NetworkManagerServer(server:BattleServer) extends SimpleChannelInboundHand
         sendPacket(new CHandshake(0,"",0,ConnectionState.BATTLE_SERVER))
         setConnectionState(ConnectionState.BATTLE_SERVER)
         setNetHandler(new NetHandlerBattleServer(server,this))
+        log.info("Connect Base server")
     }
 
     override def exceptionCaught(ctx: ChannelHandlerContext, cause: Throwable): Unit = {
@@ -114,7 +115,7 @@ class NetworkManagerServer(server:BattleServer) extends SimpleChannelInboundHand
     }
 
 
-    override def messageReceived(ctx: ChannelHandlerContext, packet: Packet[INetHandler]): Unit = {
+    override def messageReceived(ctx: ChannelHandlerContext, packet: PacketRead[INetHandler]): Unit = {
 
 
         if (channel.isOpen) {

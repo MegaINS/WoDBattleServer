@@ -1,15 +1,11 @@
 package ru.megains.wod.network.packet.battleplayer
 
 import ru.megains.wod.entity.Entity
-import ru.megains.wod.network.packet.{Packet, PacketBuffer}
+import ru.megains.wod.network.packet.{PacketBuffer, PacketWrite}
 
-class SPacketBattleDamage(hit:Int,entity:Entity) extends Packet{
+class SPacketBattleDamage(hit:Int,entity:Entity) extends PacketWrite{
 
 
-
-    override def readPacketData(buf: PacketBuffer): Unit = {
-
-    }
 
     override def writePacketData(buf: PacketBuffer): Unit = {
         buf.writeInt(hit)
@@ -17,7 +13,5 @@ class SPacketBattleDamage(hit:Int,entity:Entity) extends Packet{
         buf.writeByte(entity.team)
     }
 
-    override def processPacket(handler: Nothing): Unit = {
 
-    }
 }

@@ -1,7 +1,6 @@
 package ru.megains.wod.battle
 
 import ru.megains.wod.entity.Entity
-import ru.megains.wod.entity.mob.Mobs
 
 import scala.collection.mutable
 
@@ -14,10 +13,10 @@ object BattleList {
         val battle = new Battle(id)
         battle.addEntity(entity1,0)
         battle.addEntity(entity2,1)
-        for(_<- Range(0,20000)){
-          // battle.addEntity(Mobs.getMob(1),1)
-           battle.addEntity(Mobs.getMob(1),0)
-        }
+//        for(_<- Range(0,20000)){
+//          // battle.addEntity(Mobs.getMob(1),1)
+//           battle.addEntity(Mobs.getMob(1),0)
+//        }
 
 
 

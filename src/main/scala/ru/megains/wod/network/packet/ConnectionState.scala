@@ -1,6 +1,6 @@
 package ru.megains.wod.network.packet
 
-import ru.megains.wod.network.packet.battle.{PBattleStatus, PStartBattle}
+import ru.megains.wod.network.packet.battle.{CHandshake=>CH, PBattleStatus, PStartBattle}
 import ru.megains.wod.network.packet.battleplayer._
 
 import scala.collection.mutable
@@ -10,13 +10,13 @@ sealed abstract class ConnectionState(val name: String, val id: Int) {
 
 
     val serverIdPacket = new mutable.HashMap[ Class[_ <: Packet[_]],Int]()
-    val clientPacketId = new mutable.HashMap[Int,Class[_ <: Packet[_]]]()
+    val clientPacketId = new mutable.HashMap[Int,Class[_ <: PacketRead[_]]]()
 
 
     def registerServerPacket(packet: Class[_ <: Packet[_]]): Unit = {
         serverIdPacket +=  packet -> serverIdPacket.size
     }
-    def registerClientPacket(packet: Class[_ <: Packet[_]]): Unit = {
+    def registerClientPacket(packet: Class[_ <: PacketRead[_]]): Unit = {
         clientPacketId += clientPacketId.size -> packet
     }
     def getServerPacketId(packet: Class[_ <: Packet[_]]): Int = {
@@ -24,9 +24,9 @@ sealed abstract class ConnectionState(val name: String, val id: Int) {
     }
 
 
-    def getClientPacket(id: Int): Packet[_] = {
+    def getClientPacket(id: Int): PacketRead[_] = {
         val packet = clientPacketId(id)
-        if (packet ne null) packet.newInstance() else null.asInstanceOf[Packet[_]]
+        if (packet ne null) packet.newInstance() else null.asInstanceOf[PacketRead[_]]
     }
 
 }
@@ -51,7 +51,7 @@ object ConnectionState {
     case object HANDSHAKING extends ConnectionState("HANDSHAKING", 0) {
       //  registerServerPacket(classOf[SPacketDisconnect])
         registerServerPacket(classOf[CHandshake])
-        registerClientPacket(classOf[CHandshake])
+        registerClientPacket(classOf[CH])
     }
 
 

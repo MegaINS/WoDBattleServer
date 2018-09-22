@@ -8,12 +8,13 @@ import io.netty.channel.ChannelHandlerContext
 import io.netty.handler.codec.ByteToMessageCodec
 import ru.megains.wod.Logger
 import ru.megains.wod.network.NetworkManager
-import ru.megains.wod.network.packet.{ConnectionState, Packet, PacketBuffer}
-
-class WoDMessageCodec extends ByteToMessageCodec[Packet[_]] with Logger[WoDMessageCodec]{
+import ru.megains.wod.network.packet.{ConnectionState, PacketBuffer, PacketWrite}
 
 
-    override def encode(ctx: ChannelHandlerContext, msg: Packet[_], out: ByteBuf): Unit = {
+class WoDMessageCodec extends ByteToMessageCodec[PacketWrite] with Logger[WoDMessageCodec]{
+
+
+    override def encode(ctx: ChannelHandlerContext, msg: PacketWrite, out: ByteBuf): Unit = {
 
         val id = ctx.pipeline().channel().attr(NetworkManager.PROTOCOL_ATTRIBUTE_KEY).get().getServerPacketId(msg.getClass)
         val buffer = new PacketBuffer(out)
@@ -23,7 +24,7 @@ class WoDMessageCodec extends ByteToMessageCodec[Packet[_]] with Logger[WoDMessa
         val size = out.readableBytes()
         val name = ConnectionState.getFromPacket(msg).name
         val packetName = msg.getClass.getSimpleName
-       // log.info(s"Encoder $name, packet $packetName, id $id, size $size")
+        log.info(s"Encoder $name, packet $packetName, id $id, size $size")
     }
 
     override def decode(ctx: ChannelHandlerContext, in: ByteBuf, out: util.List[AnyRef]): Unit = {
@@ -40,7 +41,7 @@ class WoDMessageCodec extends ByteToMessageCodec[Packet[_]] with Logger[WoDMessa
 
             val packetName = packet.getClass.getSimpleName
 
-           // log.info(s"Decoder $name, packet $packetName, id $id, size $size")
+            log.info(s"Decoder $name, packet $packetName, id $id, size $size")
             packet.readPacketData(buffer)
 
             if (in.readableBytes > 0) throw new IOException("Packet was larger than I expected, found " + in.readableBytes + " bytes extra whilst reading packet " + id)

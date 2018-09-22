@@ -9,12 +9,12 @@ class NetHandlerLoginServer(server: BattleServer, networkManager: NetworkManager
    // val db = WoDDatabase.db
 
 //    override def processLoginStart(packetIn: CPacketLoginStart): Unit = {
-//        val userEmail:String =  packetIn.email
-//        val userPassword:String = packetIn.pass
+//        val playerEmail:String =  packetIn.email
+//        val playerPassword:String = packetIn.pass
 //        db.withConnection(implicit c=>
-//            SQL(s"SELECT * FROM users_auth WHERE email='$userEmail'").as(Parsers.userAuth.singleOpt).getOrElse(default = (0,"","")) match {
+//            SQL(s"SELECT * FROM players_auth WHERE email='$playerEmail'").as(Parsers.playerAuth.singleOpt).getOrElse(default = (0,"","")) match {
 //                case (id,mail,password) =>
-//                    if (userEmail == mail && userPassword == password){
+//                    if (playerEmail == mail && playerPassword == password){
 //                        networkManager.sendPacket(new SPacketLoginSuccess())
 //                        server.playerList.initializeConnectionToPlayer(networkManager, id)
 //                    }else{

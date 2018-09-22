@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/wodbattleserver.iml" filepath="$PROJECT_DIR$/.idea/modules/wodbattleserver.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/WoDBattleServer.iml" filepath="$PROJECT_DIR$/.idea/modules/WoDBattleServer.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/wodbattleserver-build.iml" filepath="$PROJECT_DIR$/.idea/modules/wodbattleserver-build.iml" />
     </modules>
   </component>

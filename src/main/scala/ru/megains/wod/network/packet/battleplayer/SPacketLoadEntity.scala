@@ -1,16 +1,13 @@
 package ru.megains.wod.network.packet.battleplayer
 
 import ru.megains.wod.entity.Entity
-import ru.megains.wod.network.packet.{Packet, PacketBuffer}
+import ru.megains.wod.network.packet.{PacketBuffer, PacketWrite}
 
 import scala.collection.mutable.ArrayBuffer
 
-class SPacketLoadEntity(teams:Array[ArrayBuffer[Entity]]) extends Packet{
+class SPacketLoadEntity(teams:Array[ArrayBuffer[Entity]]) extends PacketWrite{
 
 
-    override def readPacketData(buf: PacketBuffer): Unit = {
-
-    }
 
     override def writePacketData(buf: PacketBuffer): Unit = {
         buf.writeShort(teams(0).length)
@@ -35,7 +32,4 @@ class SPacketLoadEntity(teams:Array[ArrayBuffer[Entity]]) extends Packet{
         })
     }
 
-    override def processPacket(handler: Nothing): Unit = {
-
-    }
 }

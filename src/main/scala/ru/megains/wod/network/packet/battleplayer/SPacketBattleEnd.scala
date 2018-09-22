@@ -1,20 +1,16 @@
 package ru.megains.wod.network.packet.battleplayer
 
-import ru.megains.wod.network.packet.{Packet, PacketBuffer}
+import ru.megains.wod.network.packet.{PacketBuffer, PacketWrite}
 
-class SPacketBattleEnd(win:Boolean) extends Packet{
+class SPacketBattleEnd(win:Boolean) extends PacketWrite{
 
 
-    override def readPacketData(buf: PacketBuffer): Unit = {
 
-    }
 
     override def writePacketData(buf: PacketBuffer): Unit = {
         buf.writeBoolean(win)
 
     }
 
-    override def processPacket(handler: Nothing): Unit = {
 
-    }
 }

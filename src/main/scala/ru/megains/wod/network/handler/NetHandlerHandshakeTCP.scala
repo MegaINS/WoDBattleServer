@@ -2,8 +2,8 @@ package ru.megains.wod.network.handler
 
 import ru.megains.wod.BattleServer
 import ru.megains.wod.network.NetworkManager
-import ru.megains.wod.network.packet.CHandshake
 import ru.megains.wod.network.packet.ConnectionState.{BATTLE, LOGIN}
+import ru.megains.wod.network.packet.battle.CHandshake
 
 class NetHandlerHandshakeTCP(server: BattleServer, networkManager: NetworkManager) extends INetHandler {
 

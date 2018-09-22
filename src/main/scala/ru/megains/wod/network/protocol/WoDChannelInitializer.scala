@@ -3,8 +3,8 @@ package ru.megains.wod.network.protocol
 import io.netty.channel.socket.nio.NioSocketChannel
 import io.netty.channel.{ChannelInitializer, ChannelOption}
 import ru.megains.wod.BattleServer
-import ru.megains.wod.network.{NetworkManager, NetworkManagerServer}
 import ru.megains.wod.network.handler.NetHandlerHandshakeTCP
+import ru.megains.wod.network.{NetworkManager, NetworkManagerServer}
 
 class WoDChannelInitializer(server:BattleServer,isServer:Boolean) extends ChannelInitializer[NioSocketChannel]{
 

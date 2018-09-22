@@ -1,9 +1,9 @@
 package ru.megains.wod.network.packet.battleplayer
 
 import ru.megains.wod.network.handler.NetHandlerBattle
-import ru.megains.wod.network.packet.{Packet, PacketBuffer}
+import ru.megains.wod.network.packet.{PacketBuffer, PacketRead}
 
-class CPacketAttack extends Packet[NetHandlerBattle] {
+class CPacketAttack extends PacketRead[NetHandlerBattle] {
 
 
     var id: Int = -1
@@ -12,9 +12,6 @@ class CPacketAttack extends Packet[NetHandlerBattle] {
         id = buf.readInt()
     }
 
-    override def writePacketData(buf: PacketBuffer): Unit = {
-
-    }
 
     override def processPacket(handler: NetHandlerBattle): Unit = {
         handler.processAttack(this)

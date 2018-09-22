@@ -1,14 +1,13 @@
 package ru.megains.wod.entity.player
 
 import ru.megains.wod.battle.TurnStatus
-import ru.megains.wod.db.WoDDatabase
 import ru.megains.wod.entity.{Entity, Status}
 import ru.megains.wod.network.handler.INetHandler
 import ru.megains.wod.network.packet.Packet
 
 class Player( val id:Int) extends Entity {
 
-    val db = WoDDatabase.db
+
     var connection:INetHandler = _
 
     var money:Int = 0
@@ -22,7 +21,7 @@ class Player( val id:Int) extends Entity {
 
     def load(info: PlayerInfo): Player ={
         hp = 200
-        name = info.name
+        name = "!!!!!!"//info.name
         level = info.levelIn
         money = info.moneyIn
         exp = info.expIn

@@ -119,7 +119,7 @@ class Battle(val id:Int) extends Thread with Logger[Battle]{
     }
 
     def targetSearch(entity: Entity, team: Int):Boolean = {
-        // Logs.setLogs("Ищу противника "+user.name+" "+user.team);
+        // Logs.setLogs("Ищу противника "+player.name+" "+player.team);
         val teamTarget = if(team == 0) 1 else 0
         var target:Entity = null
         if(teamsLife(teamTarget) == 0) return false

@@ -3,9 +3,9 @@ package ru.megains.wod.network.packet.battle
 import ru.megains.wod.entity.EntityType
 import ru.megains.wod.entity.EntityType.EntityType
 import ru.megains.wod.network.handler.NetHandlerBattleServer
-import ru.megains.wod.network.packet.{Packet, PacketBuffer}
+import ru.megains.wod.network.packet.{PacketBuffer, PacketRead}
 
-class PStartBattle() extends Packet[NetHandlerBattleServer]{
+class PStartBattle() extends PacketRead[NetHandlerBattleServer]{
 
     var id:Int = -1
     var id1:Int = -1
@@ -19,10 +19,6 @@ class PStartBattle() extends Packet[NetHandlerBattleServer]{
         id2 = buf.readInt()
         et1 = EntityType(buf.readByte())
         et2 = EntityType(buf.readByte())
-    }
-
-    override def writePacketData(buf: PacketBuffer): Unit = {
-
     }
 
     override def processPacket(handler: NetHandlerBattleServer): Unit = {

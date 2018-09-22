@@ -10,11 +10,12 @@ import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.nio.NioSocketChannel
 import io.netty.util.AttributeKey
 import ru.megains.wod.network.handler.INetHandler
-import ru.megains.wod.network.packet.{ConnectionState, Packet}
+import ru.megains.wod.network.packet.{ConnectionState, Packet, PacketRead}
 import ru.megains.wod.network.protocol.WoDChannelInitializer
 import ru.megains.wod.{BattleServer, Logger}
 
-class NetworkManager(server:BattleServer) extends SimpleChannelInboundHandler[Packet[INetHandler]] with Logger[NetworkManagerServer] {
+class NetworkManager(server:BattleServer) extends SimpleChannelInboundHandler[PacketRead[INetHandler]] with Logger[NetworkManagerServer] {
+
 
 
     var channel: Channel = _
@@ -116,7 +117,7 @@ class NetworkManager(server:BattleServer) extends SimpleChannelInboundHandler[Pa
     }
 
 
-    override def messageReceived(ctx: ChannelHandlerContext, packet: Packet[INetHandler]): Unit = {
+    override def messageReceived(ctx: ChannelHandlerContext, packet: PacketRead[INetHandler]): Unit = {
 
 
         if (channel.isOpen) {
