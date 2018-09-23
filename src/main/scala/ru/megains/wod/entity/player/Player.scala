@@ -19,8 +19,7 @@ class Player( val id:Int) extends Entity {
 
 
 
-    def load(info: PlayerInfo): Player ={
-        hp = 200
+    def load(info: PlayerInfo): Unit ={
         name = "!!!!!!"//info.name
         level = info.levelIn
         money = info.moneyIn
@@ -29,7 +28,6 @@ class Player( val id:Int) extends Entity {
       //  backpack.load()
       //  body.load()
         timeStart = System.currentTimeMillis()
-        this
     }
 
 //    def sendData(): Unit ={

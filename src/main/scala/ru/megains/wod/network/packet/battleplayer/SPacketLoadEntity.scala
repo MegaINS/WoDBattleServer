@@ -16,6 +16,7 @@ class SPacketLoadEntity(teams:Array[ArrayBuffer[Entity]]) extends PacketWrite{
             buf.writeStringToBuffer(e.name)
             buf.writeInt(e.level)
             buf.writeInt(e.hp)
+            buf.writeInt(e.hpMax)
             buf.writeInt(e.status.id)
 
 
@@ -26,6 +27,7 @@ class SPacketLoadEntity(teams:Array[ArrayBuffer[Entity]]) extends PacketWrite{
             buf.writeStringToBuffer(e.name)
             buf.writeInt(e.level)
             buf.writeInt(e.hp)
+            buf.writeInt(e.hpMax)
             buf.writeInt(e.status.id)
 
 

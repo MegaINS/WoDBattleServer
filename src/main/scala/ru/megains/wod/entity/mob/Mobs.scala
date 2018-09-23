@@ -14,8 +14,6 @@ object Mobs extends Database{
 
     def getMob(id:Int): Mob ={
 
-
-
         mobsMap.getOrElse(id,default = null).clone()
     }
 

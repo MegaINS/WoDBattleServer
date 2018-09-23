@@ -1,8 +1,7 @@
 package ru.megains.wod.entity.mob
 
 import ru.megains.wod.battle.TurnStatus
-import ru.megains.wod.entity.{Entity, EntityStat}
-import ru.megains.wod.entity.EntityStat.EntityStat
+import ru.megains.wod.entity.Entity
 
 class Mob(val id:Int) extends Entity with Cloneable{
 
@@ -22,24 +21,7 @@ class Mob(val id:Int) extends Entity with Cloneable{
         }
 
     }
-    def load(stats: List[(EntityStat, Int)]) = {
-        stats.foreach{
-            case (stat,value) =>
-                stat match {
-                    case EntityStat.mHp=>
-                        hp = value
-                    case EntityStat.pow=>
-                        power = value
-                    case EntityStat.maxDam=>
-                        damageMax = value
-                    case EntityStat.minDam=>
-                        damageMin = value
-                    case _ =>
-                }
 
-        }
-
-    }
 
     @throws[CloneNotSupportedException]
     override def clone: Mob = super.clone.asInstanceOf[Mob]

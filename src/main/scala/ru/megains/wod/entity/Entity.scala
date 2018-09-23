@@ -3,6 +3,7 @@ package ru.megains.wod.entity
 import ru.megains.wod.Logger
 import ru.megains.wod.battle.TurnStatus.TurnStatus
 import ru.megains.wod.battle.{Battle, TurnStatus}
+import ru.megains.wod.entity.EntityStat.EntityStat
 import ru.megains.wod.entity.Status.Status
 import ru.megains.wod.network.handler.INetHandler
 import ru.megains.wod.network.packet.Packet
@@ -21,9 +22,10 @@ abstract class Entity extends Logger[Entity] {
     var rounds: Int = 0
     var roundsTime: Int = 0
     var missedRounds: Int = 0
-    var damageMin:Int = 10
-    var damageMax:Int = 20
-    var hp = 100
+    var damageMin:Int = 0
+    var damageMax:Int = 0
+    var hp = 0
+    var hpMax = 0
     var battleId:Int = -1
     var name:String =""
     var level:Int = 0
@@ -35,7 +37,7 @@ abstract class Entity extends Logger[Entity] {
     var roundsStartTime:Long = 0
 
     def start(): Unit = {
-        if (status eq Status.await) {
+        if (status == Status.await) {
             status = Status.life
            // battle.authorizationUser(this, team)
             battle.addTarget(this)
@@ -43,6 +45,26 @@ abstract class Entity extends Logger[Entity] {
        // getBattleUser()
     }
 
+    def load(stats: List[(EntityStat, Int)]) = {
+        stats.foreach{
+            case (stat,value) =>
+                stat match {
+                    case EntityStat.hp=>
+                        hp = value
+                    case EntityStat.hpMax=>
+                        hpMax = value
+                    case EntityStat.pow=>
+                        power = value
+                    case EntityStat.maxDam=>
+                        damageMax = value
+                    case EntityStat.minDam=>
+                        damageMin = value
+                    case _ =>
+                }
+
+        }
+
+    }
     def update():Unit
 
     def attackTarget(blow: Int): Unit = {
