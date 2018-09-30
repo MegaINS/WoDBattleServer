@@ -2,7 +2,7 @@ package ru.megains.wod.battle.effect
 
 import ru.megains.wod.entity.Entity
 
-abstract class Effect( entity: Entity,rounds: Int = 0) {
+abstract class Effect( entity: Entity,var rounds: Int = 0) {
 
 
 

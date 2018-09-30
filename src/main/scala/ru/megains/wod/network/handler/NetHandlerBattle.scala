@@ -3,7 +3,7 @@ package ru.megains.wod.network.handler
 import ru.megains.wod.entity.player.{Player, Players}
 import ru.megains.wod.network.NetworkManager
 import ru.megains.wod.network.packet.Packet
-import ru.megains.wod.network.packet.battleplayer.{CPacketAttack, CPacketConnectBattle, SPacketBattleInfo, SPacketLoadEntity}
+import ru.megains.wod.network.packet.battleplayer._
 import ru.megains.wod.{BattleServer, Logger}
 
 class NetHandlerBattle(server: BattleServer, networkManager: NetworkManager) extends INetHandler with Logger[NetHandlerBattle]{
@@ -41,5 +41,8 @@ class NetHandlerBattle(server: BattleServer, networkManager: NetworkManager) ext
 
     def processAttack(packet: CPacketAttack): Unit = {
         player.attackTarget(packet.id)
+    }
+    def processSlotUse(packetIn: SPacketSlotUse): Unit = {
+        player.slots.use(packetIn.slot)
     }
 }

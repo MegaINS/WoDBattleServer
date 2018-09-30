@@ -1,6 +1,7 @@
 package ru.megains.wod.entity.player
 
 import ru.megains.wod.battle.TurnStatus
+import ru.megains.wod.battle.effect.Effect
 import ru.megains.wod.entity.{Entity, Status}
 import ru.megains.wod.network.handler.INetHandler
 import ru.megains.wod.network.packet.Packet
@@ -15,8 +16,7 @@ class Player( val id:Int) extends Entity {
     var timeDisconnect = 0
     var timeStart:Long = 0
     var timeDisconnectConst = 20
-
-
+    val slots = new PlayerSlots(this)
 
 
     def load(info: PlayerInfo): Unit ={
@@ -98,5 +98,12 @@ class Player( val id:Int) extends Entity {
 
 
         }
+    }
+
+
+
+    def addEffect(effect: Effect): Unit ={
+        effect.use()
+        effects += effect
     }
 }

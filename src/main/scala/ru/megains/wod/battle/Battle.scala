@@ -109,9 +109,9 @@ class Battle(val id:Int) extends Thread with Logger[Battle]{
         }else{
             target.roundsStartTime = System.currentTimeMillis
         }
-        entity.rounds = 1
+        entity.rounds = 2
         entity.roundsTime = entity.roundsTimeConst
-        target.rounds = 1
+        target.rounds = 2
         target.roundsTime = entity.roundsTimeConst
 
         entity.sendPacket(new SPacketBattleStatus(entity))

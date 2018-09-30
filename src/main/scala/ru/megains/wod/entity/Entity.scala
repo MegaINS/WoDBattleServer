@@ -16,6 +16,8 @@ import scala.util.Random
 
 
 abstract class Entity extends Logger[Entity] {
+
+
     def sendPacket(packetIn: Packet[_ <: INetHandler]): Unit = {}
 
 
@@ -53,7 +55,7 @@ abstract class Entity extends Logger[Entity] {
        // getBattleUser()
     }
 
-    def load(stats: List[(EntityStat, Int)]) = {
+    def load(stats: List[(EntityStat, Int)]): Unit = {
         stats.foreach{
             case (stat,value) =>
                 stat match {
@@ -80,9 +82,9 @@ abstract class Entity extends Logger[Entity] {
         turnStatus match {
             case TurnStatus.myTurn=>
                 missedRounds = 0
-                if (Math.random < 0.5) typeAttack = TypeAttack.dodge
-                else if (Math.random * 100 < 50 ) typeAttack = TypeAttack.crit
-                else if (Math.random < 0.5) typeAttack = TypeAttack.block
+                if (Math.random < 0.1) typeAttack = TypeAttack.dodge
+                else if (Math.random  < 0.1 ) typeAttack = TypeAttack.crit
+                else if (Math.random < 0.1) typeAttack = TypeAttack.block
                 else typeAttack = TypeAttack.plain
 
                 var hit = 0.0
@@ -98,13 +100,10 @@ abstract class Entity extends Logger[Entity] {
                     if (target.hp - hit <= 0) {
                         hit = target.hp
                         battle.sendAll(new SPacketBattleDamage(target,typeAttack,-hit.toInt))
-                         //   setDamage(typeAttack, hit, false)
-                         //  target.getBattleUser()
                         battle.killEntity(target)
-                         // setKilledEntity(target)
+
                         battle.addTarget(this)
                     } else {
-                        //setDamage(typeAttack, hit, false)
                         target.hp -= hit.toInt
                         battle.sendAll(new SPacketBattleDamage(target,typeAttack,-hit.toInt))
                         passRun()

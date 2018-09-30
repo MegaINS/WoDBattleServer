@@ -1,17 +1,23 @@
 package ru.megains.wod.battle.effect
 
+import ru.megains.wod.TypeAttack
 import ru.megains.wod.entity.Entity
+import ru.megains.wod.network.packet.battleplayer.SPacketBattleDamage
 
 class Heal(entity: Entity,rounds: Int, life: Int) extends Effect(entity,rounds) {
 
 
 
     override def use(): Unit = {
-       // var life = this.life
-      //  if (entity.getHp + life > entity.getMaxHP) life = entity.getMaxHP - entity.getHp
-       // entity.changeHp(life)
-       // entity.setDamage(TypeAttack.heal, life, true)
-       // entity.getBattleUser
+
+        val rLife = if (entity.hp + life > entity.hpMax)  entity.hpMax - entity.hp else life
+
+
+
+        entity.hp += rLife
+
+        entity.battle.sendAll(new SPacketBattleDamage(entity,TypeAttack.heal,rLife))
+
     }
 
 }

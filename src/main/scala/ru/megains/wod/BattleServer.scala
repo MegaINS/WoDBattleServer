@@ -4,7 +4,7 @@ import java.net.InetAddress
 
 import ru.megains.wod.network.{NetworkManager, NetworkManagerServer, NetworkSystem}
 
-class BattleServer {
+class BattleServer  extends Logger [BattleServer]{
 
 
     var port = 8080
@@ -18,6 +18,7 @@ class BattleServer {
 
 
     def run(): Unit ={
+        log.info("Start server")
         networkSystem = new NetworkSystem(this)
         networkSystem.startLan(inetaddress,11000)
         NetworkManager.createNetworkManagerAndConnect(inetaddress,port,this)

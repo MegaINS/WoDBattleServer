@@ -81,6 +81,7 @@ object ConnectionState {
 
         registerClientPacket(classOf[CPacketConnectBattle])
         registerClientPacket(classOf[CPacketAttack])
+        registerClientPacket(classOf[SPacketSlotUse])
 
 
        // registerServerPacket(classOf[CPacketConnectBattle])
@@ -90,6 +91,8 @@ object ConnectionState {
         registerServerPacket(classOf[SPacketBattleDamage])
         registerServerPacket(classOf[SPacketBattleTarget])
         registerServerPacket(classOf[SPacketBattleEnd])
+        registerServerPacket(classOf[SPacketSlotUpdate])
+
 
     }
 
