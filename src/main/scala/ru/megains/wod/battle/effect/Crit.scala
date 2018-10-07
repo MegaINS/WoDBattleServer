@@ -6,7 +6,7 @@ class Crit(entity:Entity,crit: Int) extends Effect(entity) {
 
 
     override def use(): Unit = {
-       // entity.changeModifCrit(crit)
+        entity.modCrit += crit
     }
 
 }

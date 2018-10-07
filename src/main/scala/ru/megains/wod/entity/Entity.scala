@@ -18,6 +18,7 @@ import scala.util.Random
 abstract class Entity extends Logger[Entity] {
 
 
+
     def sendPacket(packetIn: Packet[_ <: INetHandler]): Unit = {}
 
 
@@ -44,6 +45,9 @@ abstract class Entity extends Logger[Entity] {
 
     val effects:ArrayBuffer[Effect] = new ArrayBuffer[Effect]()
 
+    var modCrit = 0
+    var modDam = 0
+    var modVamp = 0
 
 
     def start(): Unit = {
@@ -83,15 +87,13 @@ abstract class Entity extends Logger[Entity] {
             case TurnStatus.myTurn=>
                 missedRounds = 0
                 if (Math.random < 0.1) typeAttack = TypeAttack.dodge
-                else if (Math.random  < 0.1 ) typeAttack = TypeAttack.crit
+                else if (Math.random  < (10 + modCrit)/100.0f) typeAttack = TypeAttack.crit
                 else if (Math.random < 0.1) typeAttack = TypeAttack.block
                 else typeAttack = TypeAttack.plain
 
-                var hit = 0.0
-                if ((typeAttack == TypeAttack.plain) || (typeAttack == TypeAttack.crit)) {
-                    hit = (damageMin + ((damageMax - damageMin) * Math.random)) + (power / 10)
 
-                    /* ((modifDamage / 100) + 1)  + power*/
+                if ((typeAttack == TypeAttack.plain) || (typeAttack == TypeAttack.crit)) {
+                    var hit:Double = ((damageMin + ((damageMax - damageMin) * Math.random)) + (power / 10)) * (1 + modDam/100.0)
                     if (typeAttack == TypeAttack.crit) {
                         hit *= (1.8 + (0.4 * Random.nextFloat()))
                     }
@@ -99,17 +101,35 @@ abstract class Entity extends Logger[Entity] {
                     // if (target.isBlock) hit /= 2
                     if (target.hp - hit <= 0) {
                         hit = target.hp
+                        if(modVamp!= 0){
+                            var heal:Int = hit *(modVamp/100) toInt
+
+                            heal = if (hp + heal > hpMax)  hpMax - hp else heal
+
+                            hp += heal
+                            battle.sendAll(new SPacketBattleDamage(this,TypeAttack.heal,heal))
+                        }
+
                         battle.sendAll(new SPacketBattleDamage(target,typeAttack,-hit.toInt))
                         battle.killEntity(target)
 
                         battle.addTarget(this)
                     } else {
                         target.hp -= hit.toInt
+                        if(modVamp!= 0){
+                            var heal:Int = hit *(modVamp/100) toInt
+
+                            heal = if (hp + heal > hpMax)  hpMax - hp else heal
+
+                            hp += heal
+                            battle.sendAll(new SPacketBattleDamage(this,TypeAttack.heal,heal))
+                        }
+
                         battle.sendAll(new SPacketBattleDamage(target,typeAttack,-hit.toInt))
                         passRun()
                     }
                 }else{
-                    battle.sendAll(new SPacketBattleDamage(target,typeAttack,-hit.toInt))
+                    battle.sendAll(new SPacketBattleDamage(target,typeAttack,0))
                     passRun()
                 }
 
@@ -127,8 +147,14 @@ abstract class Entity extends Logger[Entity] {
 
     }
 
+    def resetAllModif() = {
+        modCrit = 0
+        modDam = 0
+        modVamp = 0
+    }
+
     def passRun(): Unit = {
-      //  resetAllModif()
+        resetAllModif()
         if (rounds == 0) {
             battle.addTarget(this, target)
            // target.getBattleUser()
